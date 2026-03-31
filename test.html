@@ -1,0 +1,853 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cursusomgeving - Intro to Cyber Security</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --panel: #111827;
+      --panel-soft: #1f2937;
+      --card: #ffffff;
+      --text: #0f172a;
+      --muted: #64748b;
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --success: #059669;
+      --border: #e5e7eb;
+      --shadow: 0 20px 50px rgba(15, 23, 42, 0.18);
+      --radius: 18px;
+      --radius-sm: 12px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(37,99,235,0.18), transparent 28%),
+        radial-gradient(circle at top right, rgba(16,185,129,0.12), transparent 24%),
+        linear-gradient(180deg, #eef4ff 0%, #f8fafc 100%);
+      color: var(--text);
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .app {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 28px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 24px;
+      padding: 16px 20px;
+      border-radius: var(--radius);
+      background: rgba(255,255,255,0.78);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 30px rgba(15,23,42,0.08);
+      border: 1px solid rgba(255,255,255,0.7);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      min-width: 0;
+    }
+
+    .brand-badge {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, #2563eb, #06b6d4);
+      color: white;
+      font-size: 20px;
+      font-weight: 700;
+      box-shadow: 0 12px 24px rgba(37,99,235,0.28);
+      flex-shrink: 0;
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: 18px;
+      line-height: 1.2;
+    }
+
+    .brand p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .topbar-meta {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .pill {
+      border-radius: 999px;
+      background: #eff6ff;
+      color: #1d4ed8;
+      padding: 8px 12px;
+      font-size: 13px;
+      font-weight: 600;
+      border: 1px solid #dbeafe;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .sidebar {
+      position: sticky;
+      top: 20px;
+    }
+
+    .sidebar-card,
+    .content-card {
+      background: rgba(255,255,255,0.88);
+      border: 1px solid rgba(255,255,255,0.75);
+      backdrop-filter: blur(10px);
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .sidebar-card {
+      padding: 22px;
+    }
+
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 10px;
+      font-size: 14px;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 12px;
+      border-radius: 999px;
+      background: #e2e8f0;
+      overflow: hidden;
+      margin-bottom: 22px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 33%;
+      background: linear-gradient(90deg, #2563eb, #06b6d4);
+      border-radius: inherit;
+      transition: width 0.3s ease;
+    }
+
+    .module-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .module-item {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      padding: 12px;
+      border-radius: 16px;
+      border: 1px solid #e5e7eb;
+      background: #fff;
+      transition: 0.2s ease;
+    }
+
+    .module-item.active {
+      border-color: #bfdbfe;
+      background: #eff6ff;
+    }
+
+    .module-item.done {
+      border-color: #bbf7d0;
+      background: #ecfdf5;
+    }
+
+    .module-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      background: #e2e8f0;
+      flex-shrink: 0;
+      font-size: 16px;
+    }
+
+    .module-item.active .module-icon {
+      background: #dbeafe;
+    }
+
+    .module-item.done .module-icon {
+      background: #d1fae5;
+    }
+
+    .module-item strong {
+      display: block;
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+
+    .module-item span {
+      display: block;
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    .content-card {
+      padding: 0;
+      overflow: hidden;
+    }
+
+    .lesson-header {
+      padding: 32px;
+      background:
+        linear-gradient(135deg, rgba(37,99,235,0.96), rgba(6,182,212,0.9)),
+        linear-gradient(180deg, #2563eb, #06b6d4);
+      color: white;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.18);
+      border: 1px solid rgba(255,255,255,0.24);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .lesson-header h2 {
+      margin: 0;
+      font-size: clamp(28px, 5vw, 42px);
+      line-height: 1.08;
+    }
+
+    .lesson-header p {
+      margin: 14px 0 0;
+      max-width: 760px;
+      color: rgba(255,255,255,0.9);
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    .lesson-body {
+      padding: 32px;
+    }
+
+    .page {
+      display: none;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin-bottom: 26px;
+    }
+
+    .stat {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 18px;
+    }
+
+    .stat small {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      font-weight: 700;
+    }
+
+    .stat strong {
+      font-size: 26px;
+      line-height: 1;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+
+    .section {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 24px;
+    }
+
+    .section h3 {
+      margin: 0 0 12px;
+      font-size: 22px;
+    }
+
+    .section p {
+      margin: 0 0 16px;
+      color: #334155;
+      line-height: 1.8;
+    }
+
+    .section ul {
+      margin: 0;
+      padding-left: 20px;
+      color: #334155;
+      line-height: 1.8;
+    }
+
+    .callout {
+      border-radius: 18px;
+      padding: 18px;
+      background: linear-gradient(180deg, #eff6ff, #f8fbff);
+      border: 1px solid #dbeafe;
+      margin-top: 18px;
+    }
+
+    .callout strong {
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .hero-image {
+      width: 100%;
+      border-radius: 18px;
+      border: 1px solid var(--border);
+      display: block;
+      box-shadow: 0 12px 28px rgba(15,23,42,0.10);
+    }
+
+    .quote {
+      margin-top: 18px;
+      padding: 18px;
+      border-radius: 18px;
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      color: #334155;
+      font-style: italic;
+    }
+
+    .lesson-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-top: 28px;
+      flex-wrap: wrap;
+    }
+
+    .muted {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    button {
+      appearance: none;
+      border: 0;
+      cursor: pointer;
+      border-radius: 14px;
+      padding: 14px 20px;
+      font-size: 15px;
+      font-weight: 700;
+      transition: transform 0.15s ease, background 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), #06b6d4);
+      color: white;
+      box-shadow: 0 14px 28px rgba(37,99,235,0.22);
+    }
+
+    .btn-primary:hover {
+      background: linear-gradient(135deg, var(--primary-dark), #0891b2);
+    }
+
+    .btn-secondary {
+      background: white;
+      color: #0f172a;
+      border: 1px solid var(--border);
+    }
+
+    .completion {
+      text-align: center;
+      padding: 36px 24px 28px;
+      background: linear-gradient(180deg, #f0fdf4, #ffffff);
+      border: 1px solid #bbf7d0;
+      border-radius: 24px;
+    }
+
+    .completion-badge {
+      width: 74px;
+      height: 74px;
+      margin: 0 auto 18px;
+      border-radius: 22px;
+      display: grid;
+      place-items: center;
+      font-size: 34px;
+      background: linear-gradient(135deg, #10b981, #34d399);
+      color: white;
+      box-shadow: 0 18px 30px rgba(16,185,129,0.26);
+    }
+
+    .completion h3 {
+      margin: 0 0 12px;
+      font-size: 28px;
+    }
+
+    .completion p {
+      max-width: 640px;
+      margin: 0 auto 18px;
+      color: #334155;
+      line-height: 1.8;
+    }
+
+    .status-box {
+      margin-top: 18px;
+      padding: 14px 16px;
+      border-radius: 14px;
+      font-size: 14px;
+      display: none;
+      text-align: left;
+    }
+
+    .status-box.show {
+      display: block;
+    }
+
+    .status-box.info {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      color: #1e3a8a;
+    }
+
+    .status-box.success {
+      background: #ecfdf5;
+      border: 1px solid #a7f3d0;
+      color: #065f46;
+    }
+
+    .status-box.error {
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      color: #991b1b;
+    }
+
+    code.inline {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: #e2e8f0;
+      font-size: 13px;
+    }
+
+    @media (max-width: 960px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        position: static;
+      }
+
+      .grid-2,
+      .stats {
+        grid-template-columns: 1fr;
+      }
+
+      .lesson-header,
+      .lesson-body {
+        padding: 24px;
+      }
+
+      .app {
+        padding: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <div class="topbar">
+      <div class="brand">
+        <div class="brand-badge">🛡️</div>
+        <div>
+          <h1>Bytemind Academy</h1>
+          <p>Intro to Cyber Security · Mini demo leeromgeving</p>
+        </div>
+      </div>
+      <div class="topbar-meta">
+        <div class="pill">2 lessen</div>
+        <div class="pill">Beginner niveau</div>
+        <div class="pill">~ 8 min</div>
+      </div>
+    </div>
+
+    <div class="layout">
+      <aside class="sidebar">
+        <div class="sidebar-card">
+          <div class="progress-label">
+            <span>Voortgang</span>
+            <strong id="progressText">33%</strong>
+          </div>
+          <div class="progress-track">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+
+          <div class="module-list">
+            <div class="module-item active" id="module1">
+              <div class="module-icon">1</div>
+              <div>
+                <strong>Welkom & basisbegrippen</strong>
+                <span>Wat is cyber security en waarom is het belangrijk?</span>
+              </div>
+            </div>
+
+            <div class="module-item" id="module2">
+              <div class="module-icon">2</div>
+              <div>
+                <strong>Veilig gedrag online</strong>
+                <span>Praktische tips voor wachtwoorden, phishing en updates.</span>
+              </div>
+            </div>
+
+            <div class="module-item" id="module3">
+              <div class="module-icon">✓</div>
+              <div>
+                <strong>Afronden</strong>
+                <span>Stuur een completion POST naar <code class="inline">example.com</code>.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <main class="content-card">
+        <div class="lesson-header">
+          <div class="eyebrow">Demo cursusomgeving</div>
+          <h2 id="pageTitle">Welkom bij Intro to Cyber Security</h2>
+          <p id="pageSubtitle">
+            In deze korte demo leer je op een toegankelijke manier wat cyber security inhoudt,
+            welke risico’s je online tegenkomt en hoe je jezelf met simpele gewoontes al een stuk beter beschermt.
+          </p>
+        </div>
+
+        <div class="lesson-body">
+          <section class="page active" id="page1">
+            <div class="stats">
+              <div class="stat">
+                <small>Onderwerp</small>
+                <strong>Cyber basics</strong>
+              </div>
+              <div class="stat">
+                <small>Moeilijkheid</small>
+                <strong>Beginner</strong>
+              </div>
+              <div class="stat">
+                <small>Lesduur</small>
+                <strong>4 min</strong>
+              </div>
+            </div>
+
+            <div class="grid-2">
+              <div class="section">
+                <h3>Wat is cyber security?</h3>
+                <p>
+                  Cyber security gaat over het beschermen van systemen, accounts, netwerken en gegevens
+                  tegen misbruik, schade en ongeautoriseerde toegang. Dat klinkt groot, maar het begint vaak
+                  met iets kleins: een sterk wachtwoord, een update die je niet uitstelt, of een mailtje dat je
+                  eerst even kritisch bekijkt.
+                </p>
+                <p>
+                  Zie het als digitale hygiëne. Je sluit thuis ook je deur af, laat niet iedereen zomaar binnen
+                  en geeft je bankpas niet mee aan een vreemde. Online werkt het eigenlijk precies zo.
+                </p>
+
+                <div class="callout">
+                  <strong>Snelle samenvatting</strong>
+                  Cyber security draait om drie dingen:
+                  <ul>
+                    <li>voorkomen dat onbevoegden binnenkomen</li>
+                    <li>beperken van schade als er iets misgaat</li>
+                    <li>snel herstellen als een incident toch gebeurt</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div>
+                <img
+                  class="hero-image"
+                  src="https://cataas.com/cat/cute?width=800&height=500"
+                  alt="Een kat ter illustratie van de leeromgeving"
+                >
+                <div class="quote">
+                  “Niet elke dreiging ziet eruit als een hacker in een hoodie. Soms is het gewoon een overtuigende phishingmail op dinsdagochtend.”
+                </div>
+              </div>
+            </div>
+
+            <div class="section">
+              <h3>Bekende risico’s</h3>
+              <p>
+                In de praktijk zie je vaak dezelfde soorten problemen terug. Denk aan phishing, zwakke wachtwoorden,
+                hergebruik van inloggegevens, verouderde software en onveilige downloads. Veel incidenten ontstaan
+                niet door supergeavanceerde aanvallen, maar door haast, onoplettendheid of gemak.
+              </p>
+              <ul>
+                <li><strong>Phishing:</strong> iemand probeert je te misleiden zodat je iets klikt of gegevens invult.</li>
+                <li><strong>Credential stuffing:</strong> oude gelekte wachtwoorden worden op andere websites geprobeerd.</li>
+                <li><strong>Malware:</strong> schadelijke software die gegevens steelt of systemen verstoort.</li>
+                <li><strong>Social engineering:</strong> misbruik maken van vertrouwen, nieuwsgierigheid of tijdsdruk.</li>
+              </ul>
+            </div>
+
+            <div class="lesson-footer">
+              <div class="muted">Les 1 van 2 · Neem rustig de tijd om alles even door te lezen.</div>
+              <button class="btn-primary" id="toPage2">Volgende pagina</button>
+            </div>
+          </section>
+
+          <section class="page" id="page2">
+            <div class="stats">
+              <div class="stat">
+                <small>Onderwerp</small>
+                <strong>Veilig gedrag</strong>
+              </div>
+              <div class="stat">
+                <small>Focus</small>
+                <strong>Praktisch</strong>
+              </div>
+              <div class="stat">
+                <small>Lesduur</small>
+                <strong>4 min</strong>
+              </div>
+            </div>
+
+            <div class="grid-2">
+              <div class="section">
+                <h3>Wat kun je vandaag al beter doen?</h3>
+                <p>
+                  Goede beveiliging hoeft niet ingewikkeld te zijn. Een paar simpele gewoontes maken vaak al
+                  een groot verschil. Werk bijvoorbeeld met unieke wachtwoorden, gebruik waar mogelijk multi-factor
+                  authentication en blijf alert op onverwachte mails of appjes met druk of urgentie.
+                </p>
+                <ul>
+                  <li>Gebruik een wachtwoordmanager in plaats van overal hetzelfde wachtwoord.</li>
+                  <li>Zet MFA aan op mail, cloudopslag en andere belangrijke accounts.</li>
+                  <li>Controleer links voordat je klikt, zeker bij onverwachte berichten.</li>
+                  <li>Installeer updates op tijd voor je laptop, telefoon en browser.</li>
+                  <li>Deel niet meer informatie dan nodig is op social media of formulieren.</li>
+                </ul>
+
+                <div class="callout">
+                  <strong>Mini-opdracht</strong>
+                  Bedenk één account dat jij vandaag nog beter kunt beveiligen. Wat is de snelste eerste stap?
+                </div>
+              </div>
+
+              <div class="section">
+                <h3>Waarom dit belangrijk is</h3>
+                <p>
+                  Aanvallers zoeken meestal de makkelijkste route. Niet omdat jij persoonlijk interessant bent,
+                  maar omdat hergebruikte wachtwoorden, oude software en snelle klikken nu eenmaal vaak werken.
+                </p>
+                <p>
+                  Door basismaatregelen toe te passen, verlaag je die kans enorm. Je hoeft geen expert te zijn
+                  om een stuk veiliger online te worden — consequent gedrag is vaak belangrijker dan technische kennis.
+                </p>
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vitae ipsum nec lorem vulputate
+                  consequat. Sed ullamcorper, libero id luctus viverra, lorem odio gravida nibh, in congue nunc
+                  nisl nec risus.
+                </p>
+              </div>
+            </div>
+
+            <div class="section">
+              <h3>Je bent bijna klaar</h3>
+              <p>
+                In een echte leeromgeving zou de knop hieronder je voortgang registreren in een backend. Voor deze demo
+                doet de pagina een <strong>POST</strong> naar <code class="inline">https://example.com</code> met wat voorbeelddata.
+              </p>
+            </div>
+
+            <div class="lesson-footer">
+              <button class="btn-secondary" id="backToPage1">Vorige pagina</button>
+              <button class="btn-primary" id="finishBtn">Finish</button>
+            </div>
+          </section>
+
+          <section class="page" id="page3">
+            <div class="completion">
+              <div class="completion-badge">🎉</div>
+              <h3>Les afgerond</h3>
+              <p>
+                Netjes. Deze demo heeft geprobeerd een completion request te versturen. In een echte omgeving
+                kun je hier bijvoorbeeld een score, voortgang of certificaatstatus verwerken.
+              </p>
+              <button class="btn-secondary" id="restartBtn">Opnieuw bekijken</button>
+              <div class="status-box info show" id="statusBox">Bezig met afronden...</div>
+            </div>
+          </section>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const pages = [
+        document.getElementById('page1'),
+        document.getElementById('page2'),
+        document.getElementById('page3')
+      ];
+
+      const pageTitle = document.getElementById('pageTitle');
+      const pageSubtitle = document.getElementById('pageSubtitle');
+      const progressFill = document.getElementById('progressFill');
+      const progressText = document.getElementById('progressText');
+
+      const module1 = document.getElementById('module1');
+      const module2 = document.getElementById('module2');
+      const module3 = document.getElementById('module3');
+
+      const statusBox = document.getElementById('statusBox');
+
+      function setActivePage(index) {
+        pages.forEach((page, i) => {
+          page.classList.toggle('active', i === index);
+        });
+
+        module1.className = 'module-item';
+        module2.className = 'module-item';
+        module3.className = 'module-item';
+
+        if (index === 0) {
+          pageTitle.textContent = 'Welkom bij Intro to Cyber Security';
+          pageSubtitle.textContent = 'In deze korte demo leer je op een toegankelijke manier wat cyber security inhoudt, welke risico’s je online tegenkomt en hoe je jezelf met simpele gewoontes al een stuk beter beschermt.';
+          progressFill.style.width = '33%';
+          progressText.textContent = '33%';
+          module1.classList.add('active');
+        }
+
+        if (index === 1) {
+          pageTitle.textContent = 'Veilig gedrag online';
+          pageSubtitle.textContent = 'Leer welke kleine gewoontes een groot verschil maken: sterke wachtwoorden, MFA, updates en slim omgaan met verdachte berichten.';
+          progressFill.style.width = '66%';
+          progressText.textContent = '66%';
+          module1.classList.add('done');
+          module2.classList.add('active');
+        }
+
+        if (index === 2) {
+          pageTitle.textContent = 'Afronden';
+          pageSubtitle.textContent = 'Je voortgang wordt geregistreerd en de demo laat zien hoe een leeromgeving een afronding kan verwerken.';
+          progressFill.style.width = '100%';
+          progressText.textContent = '100%';
+          module1.classList.add('done');
+          module2.classList.add('done');
+          module3.classList.add('active');
+        }
+      }
+
+      async function finishLesson() {
+        setActivePage(2);
+        statusBox.className = 'status-box info show';
+        statusBox.textContent = 'Bezig met versturen naar https://example.com ...';
+
+        const payload = {
+          studentId: 'demo-student-001',
+          courseId: 'intro-cyber-security',
+          completedAt: new Date().toISOString(),
+          score: 100,
+          progress: 100,
+          source: 'iframe-demo'
+        };
+
+        try {
+          const response = await fetch('https://example.com', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+          });
+
+          statusBox.className = 'status-box success show';
+          statusBox.textContent =
+            'Finish POST uitgevoerd. Response status: ' + response.status + '. In een echte omgeving zou je hier serverfeedback tonen.';
+        } catch (error) {
+          statusBox.className = 'status-box error show';
+          statusBox.textContent =
+            'De POST is geprobeerd, maar faalde waarschijnlijk door CORS of omdat example.com geen JSON endpoint verwacht. Dat is voor deze demo normaal. Fout: ' +
+            error.message;
+        }
+      }
+
+      document.getElementById('toPage2').addEventListener('click', function () {
+        setActivePage(1);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+
+      document.getElementById('backToPage1').addEventListener('click', function () {
+        setActivePage(0);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+
+      document.getElementById('finishBtn').addEventListener('click', function () {
+        finishLesson();
+      });
+
+      document.getElementById('restartBtn').addEventListener('click', function () {
+        setActivePage(0);
+        statusBox.className = 'status-box info';
+        statusBox.textContent = 'Bezig met afronden...';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+
+      setActivePage(0);
+    })();
+  </script>
+</body>
+</html>
