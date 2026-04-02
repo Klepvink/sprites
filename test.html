@@ -714,67 +714,70 @@
 
 <script>
 (function () {
+  var root = document.currentScript.getRootNode();
+
   var pages = [
-    document.getElementById('bmPage1'),
-    document.getElementById('bmPage2'),
-    document.getElementById('bmPage3')
+    root.getElementById('bmPage1'),
+    root.getElementById('bmPage2'),
+    root.getElementById('bmPage3')
   ];
 
-  var pageTitle = document.getElementById('bmPageTitle');
-  var pageSubtitle = document.getElementById('bmPageSubtitle');
-  var progressFill = document.getElementById('bmProgressFill');
-  var progressText = document.getElementById('bmProgressText');
+  var pageTitle = root.getElementById('bmPageTitle');
+  var pageSubtitle = root.getElementById('bmPageSubtitle');
+  var progressFill = root.getElementById('bmProgressFill');
+  var progressText = root.getElementById('bmProgressText');
 
-  var module1 = document.getElementById('bmModule1');
-  var module2 = document.getElementById('bmModule2');
-  var module3 = document.getElementById('bmModule3');
-  var statusBox = document.getElementById('bmStatusBox');
+  var module1 = root.getElementById('bmModule1');
+  var module2 = root.getElementById('bmModule2');
+  var module3 = root.getElementById('bmModule3');
+  var statusBox = root.getElementById('bmStatusBox');
 
   function setActivePage(index) {
     pages.forEach(function (page, i) {
-      page.classList.toggle('active', i === index);
+      if (page) {
+        page.classList.toggle('active', i === index);
+      }
     });
 
-    module1.className = 'bm-module-item';
-    module2.className = 'bm-module-item';
-    module3.className = 'bm-module-item';
+    if (module1) module1.className = 'bm-module-item';
+    if (module2) module2.className = 'bm-module-item';
+    if (module3) module3.className = 'bm-module-item';
 
     if (index === 0) {
-      pageTitle.textContent = 'Welkom bij Intro to Cyber Security';
-      pageSubtitle.textContent = 'In deze korte demo leer je op een toegankelijke manier wat cyber security inhoudt, welke risico’s je online tegenkomt en hoe je jezelf met simpele gewoontes al een stuk beter beschermt.';
-      progressFill.style.width = '33%';
-      progressText.textContent = '33%';
-      module1.classList.add('active');
+      if (pageTitle) pageTitle.textContent = 'Welkom bij Intro to Cyber Security';
+      if (pageSubtitle) pageSubtitle.textContent = 'In deze korte demo leer je op een toegankelijke manier wat cyber security inhoudt, welke risico’s je online tegenkomt en hoe je jezelf met simpele gewoontes al een stuk beter beschermt.';
+      if (progressFill) progressFill.style.width = '33%';
+      if (progressText) progressText.textContent = '33%';
+      if (module1) module1.classList.add('active');
     }
 
     if (index === 1) {
-      pageTitle.textContent = 'Veilig gedrag online';
-      pageSubtitle.textContent = 'Leer welke kleine gewoontes een groot verschil maken: sterke wachtwoorden, MFA, updates en slim omgaan met verdachte berichten.';
-      progressFill.style.width = '66%';
-      progressText.textContent = '66%';
-      module1.classList.add('done');
-      module2.classList.add('active');
+      if (pageTitle) pageTitle.textContent = 'Veilig gedrag online';
+      if (pageSubtitle) pageSubtitle.textContent = 'Leer welke kleine gewoontes een groot verschil maken: sterke wachtwoorden, MFA, updates en slim omgaan met verdachte berichten.';
+      if (progressFill) progressFill.style.width = '66%';
+      if (progressText) progressText.textContent = '66%';
+      if (module1) module1.classList.add('done');
+      if (module2) module2.classList.add('active');
     }
 
     if (index === 2) {
-      pageTitle.textContent = 'Afronden';
-      pageSubtitle.textContent = 'Je voortgang wordt geregistreerd en de demo laat zien hoe een leeromgeving een afronding kan verwerken.';
-      progressFill.style.width = '100%';
-      progressText.textContent = '100%';
-      module1.classList.add('done');
-      module2.classList.add('done');
-      module3.classList.add('active');
-    }
-
-    if (window.parent) {
-      window.parent.postMessage({ type: 'hw_portal_iframe_height', height: document.documentElement.scrollHeight }, '*');
+      if (pageTitle) pageTitle.textContent = 'Afronden';
+      if (pageSubtitle) pageSubtitle.textContent = 'Je voortgang wordt geregistreerd en de demo laat zien hoe een leeromgeving een afronding kan verwerken.';
+      if (progressFill) progressFill.style.width = '100%';
+      if (progressText) progressText.textContent = '100%';
+      if (module1) module1.classList.add('done');
+      if (module2) module2.classList.add('done');
+      if (module3) module3.classList.add('active');
     }
   }
 
   async function finishLesson() {
     setActivePage(2);
-    statusBox.className = 'bm-status-box info show';
-    statusBox.textContent = 'Bezig met versturen naar https://example.com ...';
+
+    if (statusBox) {
+      statusBox.className = 'bm-status-box info show';
+      statusBox.textContent = 'Bezig met versturen naar https://example.com ...';
+    }
 
     var payload = {
       studentId: 'demo-student-001',
@@ -782,7 +785,7 @@
       completedAt: new Date().toISOString(),
       score: 100,
       progress: 100,
-      source: 'iframe-demo'
+      source: 'shadow-demo'
     };
 
     try {
@@ -794,38 +797,51 @@
         body: JSON.stringify(payload)
       });
 
-      statusBox.className = 'bm-status-box success show';
-      statusBox.textContent = 'Finish POST uitgevoerd. Response status: ' + response.status + '.';
+      if (statusBox) {
+        statusBox.className = 'bm-status-box success show';
+        statusBox.textContent = 'Finish POST uitgevoerd. Response status: ' + response.status + '.';
+      }
     } catch (error) {
-      statusBox.className = 'bm-status-box error show';
-      statusBox.textContent = 'POST geprobeerd maar mislukt, waarschijnlijk door CORS. Fout: ' + error.message;
-    }
-
-    if (window.parent) {
-      window.parent.postMessage({ type: 'hw_portal_iframe_height', height: document.documentElement.scrollHeight }, '*');
+      if (statusBox) {
+        statusBox.className = 'bm-status-box error show';
+        statusBox.textContent = 'POST geprobeerd maar mislukt, waarschijnlijk door CORS. Fout: ' + error.message;
+      }
     }
   }
 
-  document.getElementById('bmToPage2').addEventListener('click', function () {
-    setActivePage(1);
-  });
+  var toPage2 = root.getElementById('bmToPage2');
+  var backToPage1 = root.getElementById('bmBackToPage1');
+  var finishBtn = root.getElementById('bmFinishBtn');
+  var restartBtn = root.getElementById('bmRestartBtn');
 
-  document.getElementById('bmBackToPage1').addEventListener('click', function () {
-    setActivePage(0);
-  });
+  if (toPage2) {
+    toPage2.addEventListener('click', function () {
+      setActivePage(1);
+    });
+  }
 
-  document.getElementById('bmFinishBtn').addEventListener('click', function () {
-    finishLesson();
-  });
+  if (backToPage1) {
+    backToPage1.addEventListener('click', function () {
+      setActivePage(0);
+    });
+  }
 
-  document.getElementById('bmRestartBtn').addEventListener('click', function () {
-    setActivePage(0);
-    statusBox.className = 'bm-status-box info';
-    statusBox.textContent = 'Bezig met afronden...';
-  });
+  if (finishBtn) {
+    finishBtn.addEventListener('click', function () {
+      finishLesson();
+    });
+  }
 
-  window.addEventListener('load', function () {
-    setActivePage(0);
-  });
+  if (restartBtn) {
+    restartBtn.addEventListener('click', function () {
+      setActivePage(0);
+      if (statusBox) {
+        statusBox.className = 'bm-status-box info';
+        statusBox.textContent = 'Bezig met afronden...';
+      }
+    });
+  }
+
+  setActivePage(0);
 })();
 </script>
