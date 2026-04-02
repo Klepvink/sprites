@@ -714,7 +714,13 @@
 
 <script>
 (function () {
-  var root = document.currentScript.getRootNode();
+  var root = (document.currentScript && document.currentScript.getRootNode)
+  ? document.currentScript.getRootNode()
+  : __hwShadowRoot;
+
+if (!root) {
+  return;
+}
 
   var pages = [
     root.getElementById('bmPage1'),
