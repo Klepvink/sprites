@@ -137,7 +137,7 @@
             <div class="bm-module-icon">✓</div>
             <div>
               <strong>Afronden</strong>
-              <span>Stuur een completion POST naar <code class="bm-inline-code">https://example.com</code>.</span>
+              <span>Stuur een completion POST naar <code class="bm-inline-code">https://webhook.site/dc1e233e-1037-4e10-bb9f-058d2bee7892</code>.</span>
             </div>
           </div>
         </div>
@@ -470,7 +470,7 @@
     setActivePage(pageMeta.length);
     if (statusBox) {
       statusBox.className = 'bm-status-box info show';
-      statusBox.textContent = 'Bezig met versturen naar https://example.com ...';
+      statusBox.textContent = 'Bezig met versturen naar https://webhook.site/dc1e233e-1037-4e10-bb9f-058d2bee7892 ...';
     }
 
     var payload = {
@@ -482,7 +482,7 @@
     };
 
     try {
-      var response = await fetch('https://example.com', {
+      var response = await fetch('https://webhook.site/dc1e233e-1037-4e10-bb9f-058d2bee7892', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
