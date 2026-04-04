@@ -1,530 +1,83 @@
 <style>
   @import url("https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700;800&display=swap");
 
-  * {
-    box-sizing: border-box;
-  }
-
-  .bm-app {
-    max-width: 1180px;
-    margin: 0 auto;
-    padding: 20px;
-    font-family: "Raleway", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    color: #161925;
-  }
-
-  .bm-app a {
-    color: inherit;
-  }
-
-  .bm-topbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 16px;
-    margin-bottom: 22px;
-    padding: 18px 22px;
-    border: 1px solid rgba(22, 25, 37, 0.10);
-    border-top: 4px solid #FCAB64;
-    border-radius: 22px;
-    background: rgba(255, 255, 255, 0.98);
-    box-shadow: 0 8px 20px rgba(22, 25, 37, 0.05);
-  }
-
-  .bm-brand {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    min-width: 0;
-  }
-
-  .bm-brand-badge {
-    width: 48px;
-    height: 48px;
-    border-radius: 14px;
-    display: grid;
-    place-items: center;
-    background: #161925;
-    color: #FCAB64;
-    font-size: 20px;
-    font-weight: 800;
-    flex-shrink: 0;
-    border: 1px solid rgba(252, 171, 100, 0.28);
-  }
-
-  .bm-brand h1 {
-    margin: 0;
-    font-size: 19px;
-    line-height: 1.2;
-    letter-spacing: -0.03em;
-    font-weight: 700;
-  }
-
-  .bm-brand p {
-    margin: 4px 0 0;
-    color: #687086;
-    font-size: 13px;
-    font-weight: 500;
-  }
-
-  .bm-topbar-meta {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-    justify-content: flex-end;
-  }
-
-  .bm-pill {
-    border-radius: 999px;
-    background: #f7f8fb;
-    color: #2A3047;
-    padding: 8px 12px;
-    font-size: 13px;
-    font-weight: 700;
-    border: 1px solid rgba(22, 25, 37, 0.10);
-  }
-
-  .bm-layout {
-    display: grid;
-    grid-template-columns: 310px 1fr;
-    gap: 22px;
-    align-items: start;
-  }
-
-  .bm-sidebar {
-    position: sticky;
-    top: 20px;
-  }
-
-  .bm-sidebar-card,
-  .bm-content-card {
-    background: rgba(255, 255, 255, 0.98);
-    border: 1px solid rgba(22, 25, 37, 0.10);
-    border-radius: 22px;
-    box-shadow: 0 16px 40px rgba(22, 25, 37, 0.08);
-  }
-
-  .bm-sidebar-card {
-    padding: 22px;
-  }
-
-  .bm-progress-label {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 10px;
-    font-size: 14px;
-    color: #687086;
-    font-weight: 700;
-  }
-
-  .bm-progress-track {
-    width: 100%;
-    height: 10px;
-    border-radius: 999px;
-    background: #f2f4f8;
-    overflow: hidden;
-    margin-bottom: 22px;
-  }
-
-  .bm-progress-fill {
-    height: 100%;
-    width: 33%;
-    background: #FCAB64;
-    border-radius: inherit;
-    transition: width 0.25s ease;
-  }
-
-  .bm-module-list {
-    display: grid;
-    gap: 10px;
-  }
-
-  .bm-module-item {
-    display: flex;
-    gap: 12px;
-    align-items: flex-start;
-    padding: 13px;
-    border-radius: 16px;
-    border: 1px solid rgba(22, 25, 37, 0.10);
-    background: #ffffff;
-    transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
-  }
-
-  .bm-module-item:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 8px 20px rgba(22, 25, 37, 0.05);
-  }
-
-  .bm-module-item.active {
-    border-color: rgba(252, 171, 100, 0.55);
-    background: #fffaf5;
-  }
-
-  .bm-module-item.done {
-    border-color: rgba(47, 125, 87, 0.28);
-    background: #f7fbf8;
-  }
-
-  .bm-module-icon {
-    width: 34px;
-    height: 34px;
-    border-radius: 11px;
-    display: grid;
-    place-items: center;
-    background: #f2f4f8;
-    color: #2A3047;
-    flex-shrink: 0;
-    font-size: 15px;
-    font-weight: 800;
-    border: 1px solid rgba(22, 25, 37, 0.06);
-  }
-
-  .bm-module-item.active .bm-module-icon {
-    background: #FCAB64;
-    color: #161925;
-    border-color: transparent;
-  }
-
-  .bm-module-item.done .bm-module-icon {
-    background: rgba(47, 125, 87, 0.10);
-    color: #2f7d57;
-    border-color: rgba(47, 125, 87, 0.16);
-  }
-
-  .bm-module-item strong {
-    display: block;
-    font-size: 14px;
-    margin-bottom: 4px;
-    font-weight: 700;
-  }
-
-  .bm-module-item span {
-    display: block;
-    font-size: 12px;
-    color: #687086;
-    line-height: 1.5;
-    font-weight: 500;
-  }
-
-  .bm-content-card {
-    padding: 0;
-    overflow: hidden;
-  }
-
-  .bm-lesson-header {
-    padding: 34px;
-    background: #161925;
-    color: white;
-    border-bottom: 4px solid #FCAB64;
-  }
-
-  .bm-eyebrow {
-    display: inline-block;
-    padding: 7px 12px;
-    border-radius: 999px;
-    background: rgba(252, 171, 100, 0.14);
-    border: 1px solid rgba(252, 171, 100, 0.22);
-    color: #ffd4af;
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    margin-bottom: 16px;
-  }
-
-  .bm-lesson-header h2 {
-    margin: 0;
-    font-size: clamp(28px, 5vw, 40px);
-    line-height: 1.08;
-    letter-spacing: -0.035em;
-    font-weight: 800;
-  }
-
-  .bm-lesson-header p {
-    margin: 14px 0 0;
-    max-width: 760px;
-    color: rgba(255, 255, 255, 0.82);
-    font-size: 16px;
-    line-height: 1.75;
-    font-weight: 500;
-  }
-
-  .bm-lesson-body {
-    padding: 30px;
-    background: transparent;
-  }
-
-  .bm-page {
-    display: none;
-  }
-
-  .bm-page.active {
-    display: block;
-  }
-
-  .bm-stats {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 14px;
-    margin-bottom: 24px;
-  }
-
-  .bm-stat {
-    background: #f7f8fb;
-    border: 1px solid rgba(22, 25, 37, 0.10);
-    border-radius: 18px;
-    padding: 18px;
-  }
-
-  .bm-stat small {
-    display: block;
-    color: #687086;
-    font-size: 12px;
-    margin-bottom: 8px;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    font-weight: 700;
-  }
-
-  .bm-stat strong {
-    font-size: 24px;
-    line-height: 1.1;
-    letter-spacing: -0.02em;
-    color: #161925;
-    font-weight: 800;
-  }
-
-  .bm-grid-2 {
-    display: grid;
-    grid-template-columns: 1.18fr 0.82fr;
-    gap: 22px;
-    margin-bottom: 22px;
-  }
-
-  .bm-section {
-    background: white;
-    border: 1px solid rgba(22, 25, 37, 0.10);
-    border-radius: 20px;
-    padding: 24px;
-  }
-
-  .bm-section h3 {
-    margin: 0 0 12px;
-    font-size: 22px;
-    letter-spacing: -0.03em;
-    font-weight: 800;
-    color: #161925;
-  }
-
-  .bm-section p {
-    margin: 0 0 16px;
-    color: #3b425a;
-    line-height: 1.8;
-    font-weight: 500;
-  }
-
-  .bm-section ul {
-    margin: 0;
-    padding-left: 20px;
-    color: #3b425a;
-    line-height: 1.8;
-    font-weight: 500;
-  }
-
-  .bm-callout {
-    border-radius: 18px;
-    padding: 18px;
-    background: #fffaf5;
-    border: 1px solid rgba(252, 171, 100, 0.28);
-    margin-top: 18px;
-  }
-
-  .bm-callout strong {
-    display: block;
-    margin-bottom: 8px;
-    color: #161925;
-  }
-
-  .bm-hero-image {
-    width: 100%;
-    border-radius: 18px;
-    border: 1px solid rgba(22, 25, 37, 0.10);
-    display: block;
-    box-shadow: 0 8px 20px rgba(22, 25, 37, 0.05);
-  }
-
-  .bm-quote {
-    margin-top: 18px;
-    padding: 18px;
-    border-radius: 18px;
-    background: #f7f8fb;
-    border-left: 4px solid #FCAB64;
-    color: #3b425a;
-    font-style: italic;
-    font-weight: 500;
-  }
-
-  .bm-lesson-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 16px;
-    margin-top: 26px;
-    flex-wrap: wrap;
-  }
-
-  .bm-muted {
-    color: #687086;
-    font-size: 14px;
-    font-weight: 600;
-  }
-
-  .bm-btn {
-    appearance: none;
-    border: 1px solid transparent;
-    cursor: pointer;
-    border-radius: 14px;
-    padding: 14px 20px;
-    font-size: 15px;
-    font-weight: 700;
-    font-family: inherit;
-    transition: transform 0.15s ease, background 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, color 0.2s ease;
-  }
-
-  .bm-btn:hover {
-    transform: translateY(-1px);
-  }
-
-  .bm-btn-primary {
-    background: #FCAB64;
-    color: #161925;
-    box-shadow: 0 12px 24px rgba(252, 171, 100, 0.20);
-  }
-
-  .bm-btn-primary:hover {
-    background: #f9a056;
-  }
-
-  .bm-btn-secondary {
-    background: white;
-    color: #161925;
-    border-color: rgba(22, 25, 37, 0.18);
-  }
-
-  .bm-btn-secondary:hover {
-    border-color: #2A3047;
-    color: #2A3047;
-  }
-
-  .bm-completion {
-    text-align: center;
-    padding: 36px 24px 28px;
-    background: #f7f8fb;
-    border: 1px solid rgba(22, 25, 37, 0.10);
-    border-top: 4px solid #FCAB64;
-    border-radius: 24px;
-  }
-
-  .bm-completion-badge {
-    width: 74px;
-    height: 74px;
-    margin: 0 auto 18px;
-    border-radius: 22px;
-    display: grid;
-    place-items: center;
-    font-size: 34px;
-    background: #161925;
-    color: #FCAB64;
-    border: 1px solid rgba(252, 171, 100, 0.24);
-  }
-
-  .bm-completion h3 {
-    margin: 0 0 12px;
-    font-size: 28px;
-    letter-spacing: -0.03em;
-    font-weight: 800;
-    color: #161925;
-  }
-
-  .bm-completion p {
-    max-width: 640px;
-    margin: 0 auto 18px;
-    color: #3b425a;
-    line-height: 1.8;
-    font-weight: 500;
-  }
-
-  .bm-status-box {
-    margin-top: 18px;
-    padding: 14px 16px;
-    border-radius: 14px;
-    font-size: 14px;
-    display: none;
-    text-align: left;
-    font-weight: 600;
-  }
-
-  .bm-status-box.show {
-    display: block;
-  }
-
-  .bm-status-box.info {
-    background: rgba(42, 48, 71, 0.08);
-    border: 1px solid rgba(42, 48, 71, 0.14);
-    color: #2A3047;
-  }
-
-  .bm-status-box.success {
-    background: rgba(47, 125, 87, 0.10);
-    border: 1px solid rgba(47, 125, 87, 0.20);
-    color: #2f7d57;
-  }
-
-  .bm-status-box.error {
-    background: rgba(180, 79, 79, 0.10);
-    border: 1px solid rgba(180, 79, 79, 0.18);
-    color: #b44f4f;
-  }
-
-  .bm-inline-code {
-    display: inline-block;
-    padding: 2px 8px;
-    border-radius: 999px;
-    background: #f2f4f8;
-    font-size: 13px;
-    color: #161925;
-    font-weight: 700;
-  }
-
-  @media (max-width: 960px) {
-    .bm-layout {
-      grid-template-columns: 1fr;
-    }
-
-    .bm-sidebar {
-      position: static;
-    }
-
-    .bm-grid-2,
-    .bm-stats {
-      grid-template-columns: 1fr;
-    }
-
-    .bm-lesson-header,
-    .bm-lesson-body {
-      padding: 24px;
-    }
-
-    .bm-app {
-      padding: 14px;
-    }
-
-    .bm-topbar {
-      padding: 16px;
-    }
-  }
+  * { box-sizing: border-box; }
+  .bm-app { max-width: 1180px; margin: 0 auto; padding: 20px; font-family: "Raleway", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: #161925; }
+  .bm-app a { color: inherit; }
+  .bm-topbar { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-bottom: 22px; padding: 18px 22px; border: 1px solid rgba(22, 25, 37, 0.10); border-top: 4px solid #FCAB64; border-radius: 22px; background: rgba(255,255,255,0.98); box-shadow: 0 8px 20px rgba(22,25,37,0.05); }
+  .bm-brand { display:flex; align-items:center; gap:14px; min-width:0; }
+  .bm-brand-badge { width:48px; height:48px; border-radius:14px; display:grid; place-items:center; background:#161925; color:#FCAB64; font-size:20px; font-weight:800; flex-shrink:0; border:1px solid rgba(252,171,100,0.28); }
+  .bm-brand h1 { margin:0; font-size:19px; line-height:1.2; letter-spacing:-0.03em; font-weight:700; }
+  .bm-brand p { margin:4px 0 0; color:#687086; font-size:13px; font-weight:500; }
+  .bm-topbar-meta { display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end; }
+  .bm-pill { border-radius:999px; background:#f7f8fb; color:#2A3047; padding:8px 12px; font-size:13px; font-weight:700; border:1px solid rgba(22,25,37,0.10); }
+  .bm-layout { display:grid; grid-template-columns:310px 1fr; gap:22px; align-items:start; }
+  .bm-sidebar { position:sticky; top:20px; }
+  .bm-sidebar-card, .bm-content-card { background:rgba(255,255,255,0.98); border:1px solid rgba(22,25,37,0.10); border-radius:22px; box-shadow:0 16px 40px rgba(22,25,37,0.08); }
+  .bm-sidebar-card { padding:22px; }
+  .bm-progress-label { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:10px; font-size:14px; color:#687086; font-weight:700; }
+  .bm-progress-track { width:100%; height:10px; border-radius:999px; background:#f2f4f8; overflow:hidden; margin-bottom:22px; }
+  .bm-progress-fill { height:100%; width:0%; background:#FCAB64; border-radius:inherit; transition:width 0.25s ease; }
+  .bm-module-list { display:grid; gap:10px; }
+  .bm-module-item { display:flex; gap:12px; align-items:flex-start; padding:13px; border-radius:16px; border:1px solid rgba(22,25,37,0.10); background:#ffffff; transition:border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease; }
+  .bm-module-item:hover { transform:translateY(-1px); box-shadow:0 8px 20px rgba(22,25,37,0.05); }
+  .bm-module-item.active { border-color:rgba(252,171,100,0.55); background:#fffaf5; }
+  .bm-module-item.done { border-color:rgba(47,125,87,0.28); background:#f7fbf8; }
+  .bm-module-icon { width:34px; height:34px; border-radius:11px; display:grid; place-items:center; background:#f2f4f8; color:#2A3047; flex-shrink:0; font-size:15px; font-weight:800; border:1px solid rgba(22,25,37,0.06); }
+  .bm-module-item.active .bm-module-icon { background:#FCAB64; color:#161925; border-color:transparent; }
+  .bm-module-item.done .bm-module-icon { background:rgba(47,125,87,0.10); color:#2f7d57; border-color:rgba(47,125,87,0.16); }
+  .bm-module-item strong { display:block; font-size:14px; margin-bottom:4px; font-weight:700; }
+  .bm-module-item span { display:block; font-size:12px; color:#687086; line-height:1.5; font-weight:500; }
+  .bm-content-card { padding:0; overflow:hidden; }
+  .bm-lesson-header { padding:34px; background:#161925; color:white; border-bottom:4px solid #FCAB64; }
+  .bm-eyebrow { display:inline-block; padding:7px 12px; border-radius:999px; background:rgba(252,171,100,0.14); border:1px solid rgba(252,171,100,0.22); color:#ffd4af; font-size:12px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; margin-bottom:16px; }
+  .bm-lesson-header h2 { margin:0; font-size:clamp(28px, 5vw, 40px); line-height:1.08; letter-spacing:-0.035em; font-weight:800; }
+  .bm-lesson-header p { margin:14px 0 0; max-width:760px; color:rgba(255,255,255,0.82); font-size:16px; line-height:1.75; font-weight:500; }
+  .bm-lesson-body { padding:30px; background:transparent; }
+  .bm-page { display:none; }
+  .bm-page.active { display:block; }
+  .bm-stats { display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); gap:14px; margin-bottom:24px; }
+  .bm-stat { background:#f7f8fb; border:1px solid rgba(22,25,37,0.10); border-radius:18px; padding:18px; }
+  .bm-stat small { display:block; color:#687086; font-size:12px; margin-bottom:8px; text-transform:uppercase; letter-spacing:0.05em; font-weight:700; }
+  .bm-stat strong { font-size:24px; line-height:1.1; letter-spacing:-0.02em; color:#161925; font-weight:800; }
+  .bm-grid-2 { display:grid; grid-template-columns:1.18fr 0.82fr; gap:22px; margin-bottom:22px; }
+  .bm-section { background:white; border:1px solid rgba(22,25,37,0.10); border-radius:20px; padding:24px; }
+  .bm-section h1, .bm-section h2, .bm-section h3, .bm-section h4 { margin:0 0 12px; font-size:22px; letter-spacing:-0.03em; font-weight:800; color:#161925; }
+  .bm-section p { margin:0 0 16px; color:#3b425a; line-height:1.8; font-weight:500; }
+  .bm-section ul, .bm-section ol { margin:0 0 16px; padding-left:20px; color:#3b425a; line-height:1.8; font-weight:500; }
+  .bm-section code { background:#f2f4f8; border-radius:8px; padding:2px 6px; }
+  .bm-section pre { overflow:auto; background:#161925; color:#fff; padding:16px; border-radius:14px; }
+  .bm-callout { border-radius:18px; padding:18px; background:#fffaf5; border:1px solid rgba(252,171,100,0.28); margin-top:18px; }
+  .bm-callout strong { display:block; margin-bottom:8px; color:#161925; }
+  .bm-hero-image { width:100%; border-radius:18px; border:1px solid rgba(22,25,37,0.10); display:block; box-shadow:0 8px 20px rgba(22,25,37,0.05); }
+  .bm-quote { margin-top:18px; padding:18px; border-radius:18px; background:#f7f8fb; border-left:4px solid #FCAB64; color:#3b425a; font-style:italic; font-weight:500; }
+  .bm-quiz { background:white; border:1px solid rgba(22,25,37,0.10); border-radius:20px; padding:24px; margin-top:22px; }
+  .bm-quiz h3 { margin:0 0 10px; font-size:22px; font-weight:800; }
+  .bm-quiz-options { display:grid; gap:10px; margin:18px 0; }
+  .bm-quiz-option { padding:14px 16px; border:1px solid rgba(22,25,37,0.12); border-radius:14px; background:#fff; cursor:pointer; font:inherit; text-align:left; }
+  .bm-quiz-option:hover { border-color:#2A3047; }
+  .bm-quiz-option.correct { background:#f7fbf8; border-color:rgba(47,125,87,0.28); color:#2f7d57; }
+  .bm-quiz-option.incorrect { background:#fff6f6; border-color:rgba(180,79,79,0.24); color:#b44f4f; }
+  .bm-quiz-feedback { margin-top:12px; font-weight:600; color:#3b425a; }
+  .bm-lesson-footer { display:flex; justify-content:space-between; align-items:center; gap:16px; margin-top:26px; flex-wrap:wrap; }
+  .bm-muted { color:#687086; font-size:14px; font-weight:600; }
+  .bm-btn { appearance:none; border:1px solid transparent; cursor:pointer; border-radius:14px; padding:14px 20px; font-size:15px; font-weight:700; font-family:inherit; transition:transform 0.15s ease, background 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, color 0.2s ease; }
+  .bm-btn:hover { transform:translateY(-1px); }
+  .bm-btn-primary { background:#FCAB64; color:#161925; box-shadow:0 12px 24px rgba(252,171,100,0.20); }
+  .bm-btn-primary:hover { background:#f9a056; }
+  .bm-btn-secondary { background:white; color:#161925; border-color:rgba(22,25,37,0.18); }
+  .bm-btn-secondary:hover { border-color:#2A3047; color:#2A3047; }
+  .bm-completion { text-align:center; padding:36px 24px 28px; background:#f7f8fb; border:1px solid rgba(22,25,37,0.10); border-top:4px solid #FCAB64; border-radius:24px; }
+  .bm-completion-badge { width:74px; height:74px; margin:0 auto 18px; border-radius:22px; display:grid; place-items:center; font-size:34px; background:#161925; color:#FCAB64; border:1px solid rgba(252,171,100,0.24); }
+  .bm-completion h3 { margin:0 0 12px; font-size:28px; letter-spacing:-0.03em; font-weight:800; color:#161925; }
+  .bm-completion p { max-width:640px; margin:0 auto 18px; color:#3b425a; line-height:1.8; font-weight:500; }
+  .bm-status-box { margin-top:18px; padding:14px 16px; border-radius:14px; font-size:14px; display:none; text-align:left; font-weight:600; }
+  .bm-status-box.show { display:block; }
+  .bm-status-box.info { background:rgba(42,48,71,0.08); border:1px solid rgba(42,48,71,0.14); color:#2A3047; }
+  .bm-status-box.success { background:rgba(47,125,87,0.10); border:1px solid rgba(47,125,87,0.20); color:#2f7d57; }
+  .bm-status-box.error { background:rgba(180,79,79,0.10); border:1px solid rgba(180,79,79,0.18); color:#b44f4f; }
+  .bm-inline-code { display:inline-block; padding:2px 8px; border-radius:999px; background:#f2f4f8; font-size:13px; color:#161925; font-weight:700; }
+  @media (max-width:960px) { .bm-layout { grid-template-columns:1fr; } .bm-sidebar { position:static; } .bm-grid-2, .bm-stats { grid-template-columns:1fr; } .bm-lesson-header, .bm-lesson-body { padding:24px; } .bm-app { padding:14px; } .bm-topbar { padding:16px; } }
 </style>
 
 <div class="bm-app">
@@ -532,14 +85,14 @@
     <div class="bm-brand">
       <div class="bm-brand-badge">🛡️</div>
       <div>
-        <h1>Bytemind Academy</h1>
-        <p>Intro to Cyber Security · Mini demo leeromgeving</p>
+        <h1>Intro to Cyber Security</h1>
+        <p>Intro tot cyber security · Demo leeromgeving</p>
       </div>
     </div>
     <div class="bm-topbar-meta">
-      <div class="bm-pill">2 lessen</div>
-      <div class="bm-pill">Beginner niveau</div>
-      <div class="bm-pill">~ 8 min</div>
+      <div class="bm-pill">3 lessen</div>
+      <div class="bm-pill">Beginner</div>
+      <div class="bm-pill">8 min</div>
     </div>
   </div>
 
@@ -548,34 +101,43 @@
       <div class="bm-sidebar-card">
         <div class="bm-progress-label">
           <span>Voortgang</span>
-          <strong id="bmProgressText">33%</strong>
+          <strong id="bmProgressText">25%</strong>
         </div>
         <div class="bm-progress-track">
-          <div class="bm-progress-fill" id="bmProgressFill"></div>
+          <div class="bm-progress-fill" id="bmProgressFill" style="width: 25%;"></div>
         </div>
 
         <div class="bm-module-list">
+          
           <div class="bm-module-item active" id="bmModule1">
             <div class="bm-module-icon">1</div>
             <div>
-              <strong>Welkom & basisbegrippen</strong>
-              <span>Wat is cyber security en waarom is het belangrijk?</span>
+              <strong>Welkom &amp; basisbegrippen</strong>
+              <span>Wat is cyber security? ====================== Cyber security gaat over het beschermen van sy...</span>
             </div>
           </div>
-
+          
           <div class="bm-module-item" id="bmModule2">
             <div class="bm-module-icon">2</div>
             <div>
               <strong>Veilig gedrag online</strong>
-              <span>Praktische tips voor wachtwoorden, phishing en updates.</span>
+              <span>Wat kun je vandaag al beter doen? ================================= Goede beveiliging hoeft ...</span>
             </div>
           </div>
-
+          
           <div class="bm-module-item" id="bmModule3">
+            <div class="bm-module-icon">3</div>
+            <div>
+              <strong>Veilig gedrag online</strong>
+              <span>Wat kun je vandaag al beter doen? ================================= Goede beveiliging hoeft ...</span>
+            </div>
+          </div>
+          
+          <div class="bm-module-item" id="bmModuleCompletion">
             <div class="bm-module-icon">✓</div>
             <div>
               <strong>Afronden</strong>
-              <span>Stuur een completion POST naar <code class="bm-inline-code">example.com</code>.</span>
+              <span>Stuur een completion POST naar <code class="bm-inline-code">https://example.com</code>.</span>
             </div>
           </div>
         </div>
@@ -585,158 +147,219 @@
     <main class="bm-content-card">
       <div class="bm-lesson-header">
         <div class="bm-eyebrow">Demo cursusomgeving</div>
-        <h2 id="bmPageTitle">Welkom bij Intro to Cyber Security</h2>
-        <p id="bmPageSubtitle">
-          In deze korte demo leer je op een toegankelijke manier wat cyber security inhoudt,
-          welke risico’s je online tegenkomt en hoe je jezelf met simpele gewoontes al een stuk beter beschermt.
-        </p>
+        <h2 id="bmPageTitle">Welkom &amp; basisbegrippen</h2>
+        <p id="bmPageSubtitle">Wat is cyber security? Cyber security gaat over het beschermen van systemen, accounts, netwerken en gegevens tegen misbruik, schade en ongeautoriseerde toegang. Zie het a...</p>
       </div>
 
       <div class="bm-lesson-body">
+        
         <section class="bm-page active" id="bmPage1">
+          
           <div class="bm-stats">
+            
             <div class="bm-stat">
               <small>Onderwerp</small>
               <strong>Cyber basics</strong>
             </div>
+            
             <div class="bm-stat">
               <small>Moeilijkheid</small>
               <strong>Beginner</strong>
             </div>
+            
             <div class="bm-stat">
               <small>Lesduur</small>
               <strong>4 min</strong>
             </div>
+            
           </div>
+          
 
+          
           <div class="bm-grid-2">
-            <div class="bm-section">
-              <h3>Wat is cyber security?</h3>
-              <p>
-                Cyber security gaat over het beschermen van systemen, accounts, netwerken en gegevens tegen misbruik,
-                schade en ongeautoriseerde toegang. Dat klinkt groot, maar het begint vaak met iets kleins:
-                een sterk wachtwoord, een update die je niet uitstelt, of een mailtje dat je eerst kritisch bekijkt.
-              </p>
-              <p>
-                Zie het als digitale hygiëne. Je sluit thuis ook je deur af, laat niet iedereen zomaar binnen
-                en geeft je bankpas niet mee aan een vreemde. Online werkt het eigenlijk precies zo.
-              </p>
+            <div class="bm-section"><h1>Wat is cyber security?</h1>
+<p>Cyber security gaat over het beschermen van systemen, accounts, netwerken en gegevens tegen misbruik, schade en ongeautoriseerde toegang.</p>
+<p>Zie het als digitale hygiëne. Je sluit thuis ook je deur af, laat niet iedereen zomaar binnen en geeft je bankpas niet mee aan een vreemde. Online werkt het eigenlijk precies zo.</p>
+<div class="bm-callout bm-callout-info"><strong>Snelle samenvatting</strong><ul>
+<li>voorkomen dat onbevoegden binnenkomen</li>
+<li>beperken van schade als er iets misgaat</li>
+<li>snel herstellen als een incident toch gebeurt</li>
+</ul>
+</div>
 
-              <div class="bm-callout">
-                <strong>Snelle samenvatting</strong>
-                <ul>
-                  <li>voorkomen dat onbevoegden binnenkomen</li>
-                  <li>beperken van schade als er iets misgaat</li>
-                  <li>snel herstellen als een incident toch gebeurt</li>
-                </ul>
-              </div>
-            </div>
-
+<h2>Bekende risico's</h2>
+<p>In de praktijk zie je vaak dezelfde soorten problemen terug:</p>
+<ul>
+<li><strong>Phishing:</strong> iemand probeert je te misleiden zodat je iets klikt of gegevens invult.</li>
+<li><strong>Credential stuffing:</strong> oude gelekte wachtwoorden worden op andere websites geprobeerd.</li>
+<li><strong>Malware:</strong> schadelijke software die gegevens steelt of systemen verstoort.</li>
+<li><strong>Social engineering:</strong> misbruik maken van vertrouwen, nieuwsgierigheid of tijdsdruk.</li>
+</ul>
+</div>
             <div>
-              <img
-                class="bm-hero-image"
-                src="https://cataas.com/cat/cute?width=800&height=500"
-                alt="Een kat ter illustratie van de leeromgeving"
-              >
-              <div class="bm-quote">
-                “Niet elke dreiging ziet eruit als een hacker in een hoodie. Soms is het gewoon een overtuigende phishingmail op dinsdagochtend.”
-              </div>
+              
+              <img class="bm-hero-image" src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&amp;fit=crop&amp;w=1200&amp;q=80" alt="Laptop en werkplek">
+              
+              
+              <div class="bm-quote">Niet elke dreiging ziet eruit als een hacker in een hoodie. Soms is het gewoon een overtuigende phishingmail op dinsdagochtend.</div>
+              
             </div>
           </div>
+          
 
-          <div class="bm-section">
-            <h3>Bekende risico’s</h3>
-            <p>
-              In de praktijk zie je vaak dezelfde soorten problemen terug. Denk aan phishing, zwakke wachtwoorden,
-              hergebruik van inloggegevens, verouderde software en onveilige downloads.
-            </p>
-            <ul>
-              <li><strong>Phishing:</strong> iemand probeert je te misleiden zodat je iets klikt of gegevens invult.</li>
-              <li><strong>Credential stuffing:</strong> oude gelekte wachtwoorden worden op andere websites geprobeerd.</li>
-              <li><strong>Malware:</strong> schadelijke software die gegevens steelt of systemen verstoort.</li>
-              <li><strong>Social engineering:</strong> misbruik maken van vertrouwen, nieuwsgierigheid of tijdsdruk.</li>
-            </ul>
-          </div>
+          
 
           <div class="bm-lesson-footer">
-            <div class="bm-muted">Les 1 van 2 · Neem rustig de tijd om alles even door te lezen.</div>
-            <button class="bm-btn bm-btn-primary" id="bmToPage2" type="button">Volgende pagina</button>
+            <div class="bm-muted">Les 1 van 3</div>
+            <div>
+              
+              
+              <button class="bm-btn bm-btn-primary bm-next-btn" type="button">Volgende pagina</button>
+              
+            </div>
           </div>
         </section>
-
+        
         <section class="bm-page" id="bmPage2">
+          
           <div class="bm-stats">
+            
             <div class="bm-stat">
               <small>Onderwerp</small>
               <strong>Veilig gedrag</strong>
             </div>
+            
             <div class="bm-stat">
               <small>Focus</small>
               <strong>Praktisch</strong>
             </div>
+            
             <div class="bm-stat">
               <small>Lesduur</small>
               <strong>4 min</strong>
             </div>
+            
           </div>
+          
 
-          <div class="bm-grid-2">
-            <div class="bm-section">
-              <h3>Wat kun je vandaag al beter doen?</h3>
-              <p>
-                Goede beveiliging hoeft niet ingewikkeld te zijn. Een paar simpele gewoontes maken vaak al een groot verschil.
-              </p>
-              <ul>
-                <li>Gebruik een wachtwoordmanager in plaats van overal hetzelfde wachtwoord.</li>
-                <li>Zet MFA aan op mail, cloudopslag en andere belangrijke accounts.</li>
-                <li>Controleer links voordat je klikt, zeker bij onverwachte berichten.</li>
-                <li>Installeer updates op tijd voor je laptop, telefoon en browser.</li>
-                <li>Deel niet meer informatie dan nodig is op social media of formulieren.</li>
-              </ul>
+          
+          <div class="bm-section"><h1>Wat kun je vandaag al beter doen?</h1>
+<p>Goede beveiliging hoeft niet ingewikkeld te zijn. Een paar simpele gewoontes maken vaak al een groot verschil.</p>
+<ul>
+<li>Gebruik een wachtwoordmanager in plaats van overal hetzelfde wachtwoord.</li>
+<li>Zet MFA aan op mail, cloudopslag en andere belangrijke accounts.</li>
+<li>Controleer links voordat je klikt, zeker bij onverwachte berichten.</li>
+<li>Installeer updates op tijd voor je laptop, telefoon en browser.</li>
+<li>Deel niet meer informatie dan nodig is op social media of formulieren.</li>
+</ul>
+<div class="bm-callout bm-callout-warning"><strong>Mini-opdracht</strong><p>Bedenk één account dat jij vandaag nog beter kunt beveiligen. Wat is de snelste eerste stap?</p>
+</div>
 
-              <div class="bm-callout">
-                <strong>Mini-opdracht</strong>
-                Bedenk één account dat jij vandaag nog beter kunt beveiligen. Wat is de snelste eerste stap?
-              </div>
+</div>
+          
+
+          
+          <div class="bm-quiz" data-answer="MFA aanzetten op je belangrijkste account" data-explanation="MFA maakt misbruik van alleen een wachtwoord veel lastiger.">
+            <h3>Welke maatregel heeft meestal direct de meeste impact?</h3>
+            <div class="bm-quiz-options">
+              
+              <button class="bm-quiz-option" type="button">MFA aanzetten op je belangrijkste account</button>
+              
+              <button class="bm-quiz-option" type="button">Overal hetzelfde wachtwoord gebruiken</button>
+              
+              <button class="bm-quiz-option" type="button">Updates wekenlang uitstellen</button>
+              
             </div>
-
-            <div class="bm-section">
-              <h3>Waarom dit belangrijk is</h3>
-              <p>
-                Aanvallers zoeken meestal de makkelijkste route. Niet omdat jij persoonlijk interessant bent,
-                maar omdat hergebruikte wachtwoorden, oude software en snelle klikken nu eenmaal vaak werken.
-              </p>
-              <p>
-                Door basismaatregelen toe te passen, verlaag je die kans enorm. Je hoeft geen expert te zijn
-                om een stuk veiliger online te worden — consequent gedrag is vaak belangrijker dan technische kennis.
-              </p>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vitae ipsum nec lorem vulputate consequat.
-              </p>
-            </div>
+            <div class="bm-quiz-feedback"></div>
           </div>
-
-          <div class="bm-section">
-            <h3>Je bent bijna klaar</h3>
-            <p>
-              In een echte leeromgeving zou de knop hieronder je voortgang registreren in een backend.
-              Voor deze demo doet de pagina een POST naar <code class="bm-inline-code">https://example.com</code>.
-            </p>
-          </div>
+          
 
           <div class="bm-lesson-footer">
-            <button class="bm-btn bm-btn-secondary" id="bmBackToPage1" type="button">Vorige pagina</button>
-            <button class="bm-btn bm-btn-primary" id="bmFinishBtn" type="button">Finish</button>
+            <div class="bm-muted">Les 2 van 3</div>
+            <div>
+              
+              <button class="bm-btn bm-btn-secondary bm-prev-btn" type="button">Vorige pagina</button>
+              
+              
+              <button class="bm-btn bm-btn-primary bm-next-btn" type="button">Volgende pagina</button>
+              
+            </div>
           </div>
         </section>
-
+        
         <section class="bm-page" id="bmPage3">
+          
+          <div class="bm-stats">
+            
+            <div class="bm-stat">
+              <small>Onderwerp</small>
+              <strong>Veilig gedrag</strong>
+            </div>
+            
+            <div class="bm-stat">
+              <small>Focus</small>
+              <strong>Praktisch</strong>
+            </div>
+            
+            <div class="bm-stat">
+              <small>Lesduur</small>
+              <strong>4 min</strong>
+            </div>
+            
+          </div>
+          
+
+          
+          <div class="bm-section"><h1>Wat kun je vandaag al beter doen?</h1>
+<p>Goede beveiliging hoeft niet ingewikkeld te zijn. Een paar simpele gewoontes maken vaak al een groot verschil.</p>
+<ul>
+<li>Gebruik een wachtwoordmanager in plaats van overal hetzelfde wachtwoord.</li>
+<li>Zet MFA aan op mail, cloudopslag en andere belangrijke accounts.</li>
+<li>Controleer links voordat je klikt, zeker bij onverwachte berichten.</li>
+<li>Installeer updates op tijd voor je laptop, telefoon en browser.</li>
+<li>Deel niet meer informatie dan nodig is op social media of formulieren.</li>
+</ul>
+<div class="bm-callout bm-callout-warning"><strong>Mini-opdracht</strong><p>Bedenk één account dat jij vandaag nog beter kunt beveiligen. Wat is de snelste eerste stap?</p>
+</div>
+
+</div>
+          
+
+          
+          <div class="bm-quiz" data-answer="MFA aanzetten op je belangrijkste account" data-explanation="MFA maakt misbruik van alleen een wachtwoord veel lastiger.">
+            <h3>Welke maatregel heeft meestal direct de meeste impact?</h3>
+            <div class="bm-quiz-options">
+              
+              <button class="bm-quiz-option" type="button">MFA aanzetten op je belangrijkste account</button>
+              
+              <button class="bm-quiz-option" type="button">Overal hetzelfde wachtwoord gebruiken</button>
+              
+              <button class="bm-quiz-option" type="button">Updates wekenlang uitstellen</button>
+              
+            </div>
+            <div class="bm-quiz-feedback"></div>
+          </div>
+          
+
+          <div class="bm-lesson-footer">
+            <div class="bm-muted">Les 3 van 3</div>
+            <div>
+              
+              <button class="bm-btn bm-btn-secondary bm-prev-btn" type="button">Vorige pagina</button>
+              
+              
+              <button class="bm-btn bm-btn-primary" id="bmFinishBtn" type="button">Finish</button>
+              
+            </div>
+          </div>
+        </section>
+        
+
+        <section class="bm-page" id="bmPageCompletion">
           <div class="bm-completion">
             <div class="bm-completion-badge">🎉</div>
             <h3>Les afgerond</h3>
-            <p>
-              Netjes. Deze demo heeft geprobeerd een completion request te versturen.
-            </p>
+            <p>Netjes. Deze demo heeft geprobeerd een completion request te versturen.</p>
             <button class="bm-btn bm-btn-secondary" id="bmRestartBtn" type="button">Opnieuw bekijken</button>
             <div class="bm-status-box info show" id="bmStatusBox">Bezig met afronden...</div>
           </div>
@@ -749,71 +372,102 @@
 <script>
 (function () {
   var root = (document.currentScript && document.currentScript.getRootNode)
-  ? document.currentScript.getRootNode()
-  : __hwShadowRoot;
+    ? document.currentScript.getRootNode()
+    : (typeof __hwShadowRoot !== 'undefined' ? __hwShadowRoot : document);
 
-if (!root) {
-  return;
-}
+  if (!root) return;
 
-  var pages = [
-    root.getElementById('bmPage1'),
-    root.getElementById('bmPage2'),
-    root.getElementById('bmPage3')
-  ];
+  var pageMeta = [{"body_html": "\u003ch1\u003eWat is cyber security?\u003c/h1\u003e\n\u003cp\u003eCyber security gaat over het beschermen van systemen, accounts, netwerken en gegevens tegen misbruik, schade en ongeautoriseerde toegang.\u003c/p\u003e\n\u003cp\u003eZie het als digitale hygi\u00ebne. Je sluit thuis ook je deur af, laat niet iedereen zomaar binnen en geeft je bankpas niet mee aan een vreemde. Online werkt het eigenlijk precies zo.\u003c/p\u003e\n\u003cdiv class=\"bm-callout bm-callout-info\"\u003e\u003cstrong\u003eSnelle samenvatting\u003c/strong\u003e\u003cul\u003e\n\u003cli\u003evoorkomen dat onbevoegden binnenkomen\u003c/li\u003e\n\u003cli\u003ebeperken van schade als er iets misgaat\u003c/li\u003e\n\u003cli\u003esnel herstellen als een incident toch gebeurt\u003c/li\u003e\n\u003c/ul\u003e\n\u003c/div\u003e\n\n\u003ch2\u003eBekende risico\u0027s\u003c/h2\u003e\n\u003cp\u003eIn de praktijk zie je vaak dezelfde soorten problemen terug:\u003c/p\u003e\n\u003cul\u003e\n\u003cli\u003e\u003cstrong\u003ePhishing:\u003c/strong\u003e iemand probeert je te misleiden zodat je iets klikt of gegevens invult.\u003c/li\u003e\n\u003cli\u003e\u003cstrong\u003eCredential stuffing:\u003c/strong\u003e oude gelekte wachtwoorden worden op andere websites geprobeerd.\u003c/li\u003e\n\u003cli\u003e\u003cstrong\u003eMalware:\u003c/strong\u003e schadelijke software die gegevens steelt of systemen verstoort.\u003c/li\u003e\n\u003cli\u003e\u003cstrong\u003eSocial engineering:\u003c/strong\u003e misbruik maken van vertrouwen, nieuwsgierigheid of tijdsdruk.\u003c/li\u003e\n\u003c/ul\u003e\n", "header_subtitle": "Wat is cyber security? Cyber security gaat over het beschermen van systemen, accounts, netwerken en gegevens tegen misbruik, schade en ongeautoriseerde toegang. Zie het a...", "hero_image": {"alt": "Laptop en werkplek", "src": "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format\u0026fit=crop\u0026w=1200\u0026q=80"}, "id": 1, "progress": 25, "quiz": null, "quote": "Niet elke dreiging ziet eruit als een hacker in een hoodie. Soms is het gewoon een overtuigende phishingmail op dinsdagochtend.", "sidebar_summary": "Wat is cyber security? ====================== Cyber security gaat over het beschermen van sy...", "stats": [{"label": "Onderwerp", "value": "Cyber basics"}, {"label": "Moeilijkheid", "value": "Beginner"}, {"label": "Lesduur", "value": "4 min"}], "title": "Welkom \u0026 basisbegrippen"}, {"body_html": "\u003ch1\u003eWat kun je vandaag al beter doen?\u003c/h1\u003e\n\u003cp\u003eGoede beveiliging hoeft niet ingewikkeld te zijn. Een paar simpele gewoontes maken vaak al een groot verschil.\u003c/p\u003e\n\u003cul\u003e\n\u003cli\u003eGebruik een wachtwoordmanager in plaats van overal hetzelfde wachtwoord.\u003c/li\u003e\n\u003cli\u003eZet MFA aan op mail, cloudopslag en andere belangrijke accounts.\u003c/li\u003e\n\u003cli\u003eControleer links voordat je klikt, zeker bij onverwachte berichten.\u003c/li\u003e\n\u003cli\u003eInstalleer updates op tijd voor je laptop, telefoon en browser.\u003c/li\u003e\n\u003cli\u003eDeel niet meer informatie dan nodig is op social media of formulieren.\u003c/li\u003e\n\u003c/ul\u003e\n\u003cdiv class=\"bm-callout bm-callout-warning\"\u003e\u003cstrong\u003eMini-opdracht\u003c/strong\u003e\u003cp\u003eBedenk \u00e9\u00e9n account dat jij vandaag nog beter kunt beveiligen. Wat is de snelste eerste stap?\u003c/p\u003e\n\u003c/div\u003e\n\n", "header_subtitle": "Wat kun je vandaag al beter doen? Goede beveiliging hoeft niet ingewikkeld te zijn. Een paar simpele gewoontes maken vaak al een groot verschil. Gebruik een wachtwoordman...", "hero_image": null, "id": 2, "progress": 50, "quiz": {"answer": "MFA aanzetten op je belangrijkste account", "explanation": "MFA maakt misbruik van alleen een wachtwoord veel lastiger.", "options": ["MFA aanzetten op je belangrijkste account", "Overal hetzelfde wachtwoord gebruiken", "Updates wekenlang uitstellen"], "question": "Welke maatregel heeft meestal direct de meeste impact?"}, "quote": null, "sidebar_summary": "Wat kun je vandaag al beter doen? ================================= Goede beveiliging hoeft ...", "stats": [{"label": "Onderwerp", "value": "Veilig gedrag"}, {"label": "Focus", "value": "Praktisch"}, {"label": "Lesduur", "value": "4 min"}], "title": "Veilig gedrag online"}, {"body_html": "\u003ch1\u003eWat kun je vandaag al beter doen?\u003c/h1\u003e\n\u003cp\u003eGoede beveiliging hoeft niet ingewikkeld te zijn. Een paar simpele gewoontes maken vaak al een groot verschil.\u003c/p\u003e\n\u003cul\u003e\n\u003cli\u003eGebruik een wachtwoordmanager in plaats van overal hetzelfde wachtwoord.\u003c/li\u003e\n\u003cli\u003eZet MFA aan op mail, cloudopslag en andere belangrijke accounts.\u003c/li\u003e\n\u003cli\u003eControleer links voordat je klikt, zeker bij onverwachte berichten.\u003c/li\u003e\n\u003cli\u003eInstalleer updates op tijd voor je laptop, telefoon en browser.\u003c/li\u003e\n\u003cli\u003eDeel niet meer informatie dan nodig is op social media of formulieren.\u003c/li\u003e\n\u003c/ul\u003e\n\u003cdiv class=\"bm-callout bm-callout-warning\"\u003e\u003cstrong\u003eMini-opdracht\u003c/strong\u003e\u003cp\u003eBedenk \u00e9\u00e9n account dat jij vandaag nog beter kunt beveiligen. Wat is de snelste eerste stap?\u003c/p\u003e\n\u003c/div\u003e\n\n", "header_subtitle": "Wat kun je vandaag al beter doen? Goede beveiliging hoeft niet ingewikkeld te zijn. Een paar simpele gewoontes maken vaak al een groot verschil. Gebruik een wachtwoordman...", "hero_image": null, "id": 3, "progress": 75, "quiz": {"answer": "MFA aanzetten op je belangrijkste account", "explanation": "MFA maakt misbruik van alleen een wachtwoord veel lastiger.", "options": ["MFA aanzetten op je belangrijkste account", "Overal hetzelfde wachtwoord gebruiken", "Updates wekenlang uitstellen"], "question": "Welke maatregel heeft meestal direct de meeste impact?"}, "quote": null, "sidebar_summary": "Wat kun je vandaag al beter doen? ================================= Goede beveiliging hoeft ...", "stats": [{"label": "Onderwerp", "value": "Veilig gedrag"}, {"label": "Focus", "value": "Praktisch"}, {"label": "Lesduur", "value": "4 min"}], "title": "Veilig gedrag online"}];
+  var pageIds = pageMeta.map(function (_, i) { return 'bmPage' + (i + 1); });
+  var pages = pageIds.map(function (id) { return root.getElementById(id); });
+  pages.push(root.getElementById('bmPageCompletion'));
 
   var pageTitle = root.getElementById('bmPageTitle');
   var pageSubtitle = root.getElementById('bmPageSubtitle');
   var progressFill = root.getElementById('bmProgressFill');
   var progressText = root.getElementById('bmProgressText');
-
-  var module1 = root.getElementById('bmModule1');
-  var module2 = root.getElementById('bmModule2');
-  var module3 = root.getElementById('bmModule3');
   var statusBox = root.getElementById('bmStatusBox');
+  var completionModule = root.getElementById('bmModuleCompletion');
+
+  function modules() {
+    var arr = [];
+    for (var i = 0; i < pageMeta.length; i++) arr.push(root.getElementById('bmModule' + (i + 1)));
+    arr.push(completionModule);
+    return arr;
+  }
 
   function setActivePage(index) {
     pages.forEach(function (page, i) {
-      if (page) {
-        page.classList.toggle('active', i === index);
-      }
+      if (page) page.classList.toggle('active', i === index);
     });
 
-    if (module1) module1.className = 'bm-module-item';
-    if (module2) module2.className = 'bm-module-item';
-    if (module3) module3.className = 'bm-module-item';
+    modules().forEach(function (mod) {
+      if (mod) mod.className = 'bm-module-item';
+    });
 
-    if (index === 0) {
-      if (pageTitle) pageTitle.textContent = 'Welkom bij Intro to Cyber Security';
-      if (pageSubtitle) pageSubtitle.textContent = 'In deze korte demo leer je op een toegankelijke manier wat cyber security inhoudt, welke risico’s je online tegenkomt en hoe je jezelf met simpele gewoontes al een stuk beter beschermt.';
-      if (progressFill) progressFill.style.width = '33%';
-      if (progressText) progressText.textContent = '33%';
-      if (module1) module1.classList.add('active');
-    }
-
-    if (index === 1) {
-      if (pageTitle) pageTitle.textContent = 'Veilig gedrag online';
-      if (pageSubtitle) pageSubtitle.textContent = 'Leer welke kleine gewoontes een groot verschil maken: sterke wachtwoorden, MFA, updates en slim omgaan met verdachte berichten.';
-      if (progressFill) progressFill.style.width = '66%';
-      if (progressText) progressText.textContent = '66%';
-      if (module1) module1.classList.add('done');
-      if (module2) module2.classList.add('active');
-    }
-
-    if (index === 2) {
+    if (index < pageMeta.length) {
+      var meta = pageMeta[index];
+      if (pageTitle) pageTitle.textContent = meta.title;
+      if (pageSubtitle) pageSubtitle.textContent = meta.header_subtitle;
+      if (progressFill) progressFill.style.width = meta.progress + '%';
+      if (progressText) progressText.textContent = meta.progress + '%';
+      modules().forEach(function (mod, i) {
+        if (!mod) return;
+        if (i < index) mod.classList.add('done');
+        if (i === index) mod.classList.add('active');
+      });
+    } else {
       if (pageTitle) pageTitle.textContent = 'Afronden';
       if (pageSubtitle) pageSubtitle.textContent = 'Je voortgang wordt geregistreerd en de demo laat zien hoe een leeromgeving een afronding kan verwerken.';
       if (progressFill) progressFill.style.width = '100%';
       if (progressText) progressText.textContent = '100%';
-      if (module1) module1.classList.add('done');
-      if (module2) module2.classList.add('done');
-      if (module3) module3.classList.add('active');
+      modules().forEach(function (mod, i) {
+        if (!mod) return;
+        if (i < pageMeta.length) mod.classList.add('done');
+      });
+      if (completionModule) completionModule.classList.add('active');
     }
   }
 
-  async function finishLesson() {
-    setActivePage(2);
+  function wireNavigation() {
+    var nextButtons = root.querySelectorAll('.bm-next-btn');
+    var prevButtons = root.querySelectorAll('.bm-prev-btn');
 
+    nextButtons.forEach(function (btn, idx) {
+      btn.addEventListener('click', function () { setActivePage(idx + 1); });
+    });
+
+    prevButtons.forEach(function (btn, idx) {
+      btn.addEventListener('click', function () { setActivePage(idx); });
+    });
+  }
+
+  function wireQuiz() {
+    root.querySelectorAll('.bm-quiz').forEach(function (quiz) {
+      var answer = quiz.getAttribute('data-answer');
+      var explanation = quiz.getAttribute('data-explanation') || '';
+      var feedback = quiz.querySelector('.bm-quiz-feedback');
+      quiz.querySelectorAll('.bm-quiz-option').forEach(function (optionBtn) {
+        optionBtn.addEventListener('click', function () {
+          quiz.querySelectorAll('.bm-quiz-option').forEach(function (btn) {
+            btn.classList.remove('correct');
+            btn.classList.remove('incorrect');
+          });
+          var chosen = optionBtn.textContent.trim();
+          if (chosen === answer) {
+            optionBtn.classList.add('correct');
+            if (feedback) feedback.textContent = explanation || 'Goed gedaan.';
+          } else {
+            optionBtn.classList.add('incorrect');
+            if (feedback) feedback.textContent = 'Nog niet helemaal. Goed antwoord: ' + answer + (explanation ? '. ' + explanation : '.');
+          }
+        });
+      });
+    });
+  }
+
+  async function finishLesson() {
+    setActivePage(pageMeta.length);
     if (statusBox) {
       statusBox.className = 'bm-status-box info show';
       statusBox.textContent = 'Bezig met versturen naar https://example.com ...';
@@ -823,20 +477,16 @@ if (!root) {
       studentId: 'demo-student-001',
       courseId: 'intro-cyber-security',
       completedAt: new Date().toISOString(),
-      score: 100,
       progress: 100,
-      source: 'shadow-demo'
+      source: 'bytemind-builder'
     };
 
     try {
       var response = await fetch('https://example.com', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
       });
-
       if (statusBox) {
         statusBox.className = 'bm-status-box success show';
         statusBox.textContent = 'Finish POST uitgevoerd. Response status: ' + response.status + '.';
@@ -849,39 +499,19 @@ if (!root) {
     }
   }
 
-  var toPage2 = root.getElementById('bmToPage2');
-  var backToPage1 = root.getElementById('bmBackToPage1');
   var finishBtn = root.getElementById('bmFinishBtn');
   var restartBtn = root.getElementById('bmRestartBtn');
+  if (finishBtn) finishBtn.addEventListener('click', finishLesson);
+  if (restartBtn) restartBtn.addEventListener('click', function () {
+    if (statusBox) {
+      statusBox.className = 'bm-status-box info';
+      statusBox.textContent = 'Bezig met afronden...';
+    }
+    setActivePage(0);
+  });
 
-  if (toPage2) {
-    toPage2.addEventListener('click', function () {
-      setActivePage(1);
-    });
-  }
-
-  if (backToPage1) {
-    backToPage1.addEventListener('click', function () {
-      setActivePage(0);
-    });
-  }
-
-  if (finishBtn) {
-    finishBtn.addEventListener('click', function () {
-      finishLesson();
-    });
-  }
-
-  if (restartBtn) {
-    restartBtn.addEventListener('click', function () {
-      setActivePage(0);
-      if (statusBox) {
-        statusBox.className = 'bm-status-box info';
-        statusBox.textContent = 'Bezig met afronden...';
-      }
-    });
-  }
-
+  wireNavigation();
+  wireQuiz();
   setActivePage(0);
 })();
 </script>
