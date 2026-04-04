@@ -19,7 +19,7 @@
   .bm-progress-track { width:100%; height:10px; border-radius:999px; background:#f2f4f8; overflow:hidden; margin-bottom:22px; }
   .bm-progress-fill { height:100%; width:0%; background:#FCAB64; border-radius:inherit; transition:width 0.25s ease; }
   .bm-module-list { display:grid; gap:10px; }
-  .bm-module-item { display:flex; gap:12px; align-items:flex-start; padding:13px; border-radius:16px; border:1px solid rgba(22,25,37,0.10); background:#ffffff; transition:border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease; }
+  .bm-module-item { display:flex; gap:12px; align-items:center; padding:13px; border-radius:16px; border:1px solid rgba(22,25,37,0.10); background:#ffffff; transition:border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease; }
   .bm-module-item:hover { transform:translateY(-1px); box-shadow:0 8px 20px rgba(22,25,37,0.05); }
   .bm-module-item.active { border-color:rgba(252,171,100,0.55); background:#fffaf5; }
   .bm-module-item.done { border-color:rgba(47,125,87,0.28); background:#f7fbf8; }
@@ -113,7 +113,6 @@
             <div class="bm-module-icon">1</div>
             <div>
               <strong>Welkom &amp; basisbegrippen</strong>
-              <span>Wat is cyber security? ====================== Cyber security gaat over het beschermen van sy...</span>
             </div>
           </div>
           
@@ -121,7 +120,6 @@
             <div class="bm-module-icon">2</div>
             <div>
               <strong>Veilig gedrag online</strong>
-              <span>Wat kun je vandaag al beter doen? ================================= Goede beveiliging hoeft ...</span>
             </div>
           </div>
           
@@ -129,7 +127,6 @@
             <div class="bm-module-icon">3</div>
             <div>
               <strong>Veilig gedrag online</strong>
-              <span>Wat kun je vandaag al beter doen? ================================= Goede beveiliging hoeft ...</span>
             </div>
           </div>
           
@@ -137,7 +134,6 @@
             <div class="bm-module-icon">✓</div>
             <div>
               <strong>Afronden</strong>
-              <span>Stuur een completion POST naar <code class="bm-inline-code">https://webhook.site/dc1e233e-1037-4e10-bb9f-058d2bee7892</code>.</span>
             </div>
           </div>
         </div>
@@ -470,7 +466,7 @@
     setActivePage(pageMeta.length);
     if (statusBox) {
       statusBox.className = 'bm-status-box info show';
-      statusBox.textContent = 'Bezig met versturen naar https://webhook.site/dc1e233e-1037-4e10-bb9f-058d2bee7892 ...';
+      statusBox.textContent = 'Bezig met versturen naar https://example.com ...';
     }
 
     var payload = {
@@ -482,7 +478,7 @@
     };
 
     try {
-      var response = await fetch('https://webhook.site/dc1e233e-1037-4e10-bb9f-058d2bee7892', {
+      var response = await fetch('https://example.com', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
